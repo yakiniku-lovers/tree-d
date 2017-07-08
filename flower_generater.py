@@ -1,10 +1,31 @@
 import argparse
 from PIL import Image
+import math
 
-size = (500, 500)
+width = 500
+size = (width, width)
+scale_ratio = 0.4
+shift_ratio = 1.1
+petal_image_path = 'salmon-sakura-petal-2-hi.png'
+
 
 def generate(color, number):
     canvas = Image.new('RGBA', size)
+
+    petal = Image.open(petal_image_path)
+    w, h = petal.size
+    petal_ratio = width * scale_ratio / w
+    petal_size = (int(w * petal_ratio), int(h * petal_ratio))
+    petal = petal.resize(petal_size)
+
+    petal_pasted = Image.new('RGBA', size)
+    petal_pasted.paste(petal, (int(width / 2 * shift_ratio),int(width / 2)))
+
+    for i in range(number):
+        theta = 360 / number * i
+        im = petal_pasted.rotate(theta)
+        canvas.paste(im, (0,0), im)
+
     return canvas
 
 if __name__ == "__main__":

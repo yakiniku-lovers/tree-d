@@ -1,4 +1,11 @@
 import argparse
+from PIL import Image
+
+size = (500, 500)
+
+def generate(color, number):
+    canvas = Image.new('RGBA', size)
+    return canvas
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate flower image.')
@@ -11,4 +18,5 @@ if __name__ == "__main__":
     print("color = ", args.color)
     print("number = ", args.number)
 
-    # generate(args.color, args.number)
+    img = generate(args.color, args.number)
+    img.save('flower.png')

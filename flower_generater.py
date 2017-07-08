@@ -43,8 +43,4 @@ if __name__ == "__main__":
                         help='number of petals')
     args = parser.parse_args()
 
-    print("color = ", args.color)
-    print("number = ", args.number)
-
-    img = generate(args.color, args.number)
-    img.save('flower.png')
+    print(generate_file(args.color, args.number))

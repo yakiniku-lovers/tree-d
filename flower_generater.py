@@ -13,7 +13,14 @@ petal_image_path = 'petal0.png'
 def generate(color, number):
     canvas = Image.new('RGBA', size)
 
-    petal = Image.open(petal_image_path)
+    petal_gray = Image.open(petal_image_path).convert('LA').convert('RGBA')
+    petal_source = petal_gray.split()
+    R, G, B = 0, 1, 2
+    petal_source[R].paste(petal_source[R].point(lambda i: i * color[R] / 255), None)
+    petal_source[G].paste(petal_source[G].point(lambda i: i * color[G] / 255), None)
+    petal_source[B].paste(petal_source[B].point(lambda i: i * color[B] / 255), None)
+    petal = Image.merge(petal_gray.mode, petal_source)
+
     w, h = petal.size
     petal_ratio = width * scale_ratio / w
     petal_size = (int(w * petal_ratio), int(h * petal_ratio))

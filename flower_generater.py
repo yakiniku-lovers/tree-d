@@ -1,6 +1,7 @@
 import argparse
 from PIL import Image
 import math
+import uuid
 
 width = 500
 size = (width, width)
@@ -27,6 +28,12 @@ def generate(color, number):
         canvas.paste(im, (0,0), im)
 
     return canvas
+
+def generate_file(color, number):
+    img = generate(color, number)
+    filename = str(uuid.uuid4()) + '.png'
+    img.save(filename)
+    return filename
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate flower image.')

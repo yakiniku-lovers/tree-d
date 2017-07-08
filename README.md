@@ -3,8 +3,10 @@
 
 ## 最低要件定義
 
-## 開発言語
+## 開発環境
 * python
+
+* pillow
 
 ## コマンドライン引数
 `python flower_generater.py -color 126 0 255 -number 6`

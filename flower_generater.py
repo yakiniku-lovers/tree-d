@@ -6,7 +6,7 @@ width = 500
 size = (width, width)
 scale_ratio = 0.4
 shift_ratio = 1.1
-petal_image_path = 'salmon-sakura-petal-2-hi.png'
+petal_image_path = 'petal0.png'
 
 
 def generate(color, number):

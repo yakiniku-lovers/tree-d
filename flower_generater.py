@@ -2,7 +2,7 @@ import argparse
 from PIL import Image,ImageEnhance
 import math
 import uuid
-
+import os
 
 class Petal:
     def __init__(self, path, rotate):
@@ -60,11 +60,21 @@ class Flower:
 
         return canvas
 
-def generate_file(color, number, petal_type):
+def generate_petals():
+    d = os.path.dirname(os.path.abspath(__file__)) + '/'
     petals = [
-        Petal('petal0.png', 0),
-        Petal('petal1.png', -55)
+        Petal(d + 'images/petal0.png', 0),
+        Petal(d + 'images/petal1.png', -30),
+        Petal(d + 'images/petal2.png', 0),
+        Petal(d + 'images/petal3.png', 10),
+        Petal(d + 'images/petal4.png', 0),
+        Petal(d + 'images/petal5.png', -30),
+        Petal(d + 'images/petal6.png', 20)
     ]
+    return petals
+
+def generate_file(color, number, petal_type):
+    petals = generate_petals()
     petal = petals[petal_type]
     flower = Flower(petal)
     img = flower.generate(color, number)

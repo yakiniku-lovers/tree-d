@@ -10,8 +10,8 @@
 
 
 ## コマンドライン引数
-`python flower_generater.py --color 126 0 255 --number 6 --type 0`
-or
+`python flower_generater.py --color 126 0 255 --number 6 --type 0`  
+or  
 `python flower_generater.py -c 126 0 255 -n 6 -t 0`
 
 ### パラメータ

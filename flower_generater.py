@@ -3,53 +3,64 @@ from PIL import Image,ImageEnhance
 import math
 import uuid
 
-width = 500
-size = (width, width)
-scale_ratio = 0.4
-shift_ratio = 1.1
-petal_image_path = 'petal0.png'
-brightness = 1.8
 
-def generate_petal(color):
-    petal_gray = Image.open(petal_image_path).convert('LA')
-    brightness_converter = ImageEnhance.Brightness(petal_gray)
-    petal_base = brightness_converter.enhance(brightness)
-    petal_source = petal_base.split()
-    L, A = 0, 1
-    R, G, B = 0, 1, 2
-    petal = Image.merge(
-        'RGBA',
-        (
-            petal_source[L].point(lambda i: i * color[R] / 255),
-            petal_source[L].point(lambda i: i * color[G] / 255),
-            petal_source[L].point(lambda i: i * color[B] / 255),
-            petal_source[A]
+class Petal:
+    def __init__(self, path):
+        self.scale_ratio = 0.4
+        self.shift_ratio = 1.1
+        self.brightness = 1.8
+        self.petal_image_path = path
+
+    def generate_petal(self, width, color):
+        petal_gray = Image.open(self.petal_image_path).convert('LA')
+        brightness_converter = ImageEnhance.Brightness(petal_gray)
+        petal_base = brightness_converter.enhance(self.brightness)
+        petal_source = petal_base.split()
+        L, A = 0, 1
+        R, G, B = 0, 1, 2
+        petal = Image.merge(
+            'RGBA',
+            (
+                petal_source[L].point(lambda i: i * color[R] / 255),
+                petal_source[L].point(lambda i: i * color[G] / 255),
+                petal_source[L].point(lambda i: i * color[B] / 255),
+                petal_source[A]
+            )
         )
-    )
 
-    w, h = petal.size
-    petal_ratio = width * scale_ratio / w
-    petal_size = (int(w * petal_ratio), int(h * petal_ratio))
-    petal = petal.resize(petal_size)
+        w, h = petal.size
+        petal_ratio = width * self.scale_ratio / w
+        petal_size = (int(w * petal_ratio), int(h * petal_ratio))
+        petal = petal.resize(petal_size)
 
-    return petal
+        return petal
 
-def generate(color, number):
-    canvas = Image.new('RGBA', size)
+class Flower:
+    def __init__(self, petal):
+        self.petal = petal
+        self.width = 500
+        self.size = (self.width, self.width)
 
-    petal = generate_petal(color)
-    petal_pasted = Image.new('RGBA', size)
-    petal_pasted.paste(petal, (int(width / 2 * shift_ratio),int(width / 2)))
+    def generate(self, color, number):
+        canvas = Image.new('RGBA', self.size)
 
-    for i in range(number):
-        theta = 360 / number * i
-        im = petal_pasted.rotate(theta)
-        canvas.paste(im, (0,0), im)
+        petal = self.petal.generate_petal(self.width, color)
+        petal_pasted = Image.new('RGBA', self.size)
+        petal_pasted.paste(petal,
+                           (int(self.width / 2 * self.petal.shift_ratio),
+                            int(self.width / 2)))
 
-    return canvas
+        for i in range(number):
+            theta = 360 / number * i
+            im = petal_pasted.rotate(theta)
+            canvas.paste(im, (0,0), im)
+
+        return canvas
 
 def generate_file(color, number):
-    img = generate(color, number)
+    petal = Petal('petal0.png')
+    flower = Flower(petal)
+    img = flower.generate(color, number)
     filename = str(uuid.uuid4()) + '.png'
     img.save(filename)
     return filename

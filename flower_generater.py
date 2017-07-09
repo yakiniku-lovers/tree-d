@@ -1,5 +1,5 @@
 import argparse
-from PIL import Image
+from PIL import Image,ImageEnhance
 import math
 import uuid
 
@@ -8,10 +8,13 @@ size = (width, width)
 scale_ratio = 0.4
 shift_ratio = 1.1
 petal_image_path = 'petal0.png'
+brightness = 1.8
 
 def generate_petal(color):
     petal_gray = Image.open(petal_image_path).convert('LA')
-    petal_source = petal_gray.split()
+    brightness_converter = ImageEnhance.Brightness(petal_gray)
+    petal_base = brightness_converter.enhance(brightness)
+    petal_source = petal_base.split()
     L, A = 0, 1
     R, G, B = 0, 1, 2
     petal = Image.merge(

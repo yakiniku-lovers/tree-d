@@ -21,12 +21,12 @@ or
 
 * 花弁の種類 (0-6)
 
-|   type | 花弁              | 花弁画像                          |
-| -----: | :---------------- | --------------------------------- |
-|      0 | 桜1               | ![sakura1](images/petal0.png)     |
-|      1 | 桜2               | ![sakura2](images/petal1.png)     |
-|      2 | エーデルワイス    | ![edelwaiss](images/petal2.png)   |
-|      3 | 稲妻              | ![inazuma](images/petal3.png)     |
-|      4 | 焼肉              | ![yakiniku](images/petal4.png)    |
-|      5 | 魚                | ![sakana](images/petal5.png)      |
-|      6 | 昆布              | ![combu](images/petal6.png)       |
+|   type | 花弁              | 花弁画像                                   |
+| -----: | :---------------- | ---------------------------------          |
+|      0 | 桜1               | ![sakura1](flower_samples/sakura1.png)     |
+|      1 | 桜2               | ![sakura2](flower_samples/sakura2.png)     |
+|      2 | エーデルワイス    | ![edelwaiss](flower_samples/edelwaiss.png) |
+|      3 | 稲妻              | ![inazuma](flower_samples/inazuma.png)     |
+|      4 | 焼肉              | ![yakiniku](flower_samples/niku.png)       |
+|      5 | 魚                | ![sakana](flower_samples/sakana.png)       |
+|      6 | 昆布              | ![combu](flower_samples/combu.png)         |

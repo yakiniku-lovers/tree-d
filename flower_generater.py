@@ -9,23 +9,32 @@ scale_ratio = 0.4
 shift_ratio = 1.1
 petal_image_path = 'petal0.png'
 
-
-def generate(color, number):
-    canvas = Image.new('RGBA', size)
-
-    petal_gray = Image.open(petal_image_path).convert('LA').convert('RGBA')
+def generate_petal(color):
+    petal_gray = Image.open(petal_image_path).convert('LA')
     petal_source = petal_gray.split()
+    L, A = 0, 1
     R, G, B = 0, 1, 2
-    petal_source[R].paste(petal_source[R].point(lambda i: i * color[R] / 255), None)
-    petal_source[G].paste(petal_source[G].point(lambda i: i * color[G] / 255), None)
-    petal_source[B].paste(petal_source[B].point(lambda i: i * color[B] / 255), None)
-    petal = Image.merge(petal_gray.mode, petal_source)
+    petal = Image.merge(
+        'RGBA',
+        (
+            petal_source[L].point(lambda i: i * color[R] / 255),
+            petal_source[L].point(lambda i: i * color[G] / 255),
+            petal_source[L].point(lambda i: i * color[B] / 255),
+            petal_source[A]
+        )
+    )
 
     w, h = petal.size
     petal_ratio = width * scale_ratio / w
     petal_size = (int(w * petal_ratio), int(h * petal_ratio))
     petal = petal.resize(petal_size)
 
+    return petal
+
+def generate(color, number):
+    canvas = Image.new('RGBA', size)
+
+    petal = generate_petal(color)
     petal_pasted = Image.new('RGBA', size)
     petal_pasted.paste(petal, (int(width / 2 * shift_ratio),int(width / 2)))
 

@@ -15,8 +15,8 @@ class Petal:
     def generate_petal(self, width, color):
         petal_gray = Image.open(self.petal_image_path).convert('LA').rotate(self.rotate, expand=1)
         crop = petal_gray.split()[-1].getbbox()
-        petal_gray.crop(crop)
-        brightness_converter = ImageEnhance.Brightness(petal_gray)
+        petal_croped = petal_gray.crop(crop)
+        brightness_converter = ImageEnhance.Brightness(petal_croped)
         petal_base = brightness_converter.enhance(self.brightness)
         petal_source = petal_base.split()
         L, A = 0, 1

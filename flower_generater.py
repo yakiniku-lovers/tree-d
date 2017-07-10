@@ -13,6 +13,10 @@ class Petal:
         self.petal_image_path = path
 
     def generate_petal(self, width, color):
+        for c in color:
+            if not ( (c >= 0) and ( c <= 255 ) ):
+                raise RuntimeError('Color value is invalid')
+
         petal_gray = Image.open(self.petal_image_path).convert('LA').rotate(self.rotate, expand=1)
         crop = petal_gray.split()[-1].getbbox()
         petal_croped = petal_gray.crop(crop)
@@ -75,6 +79,10 @@ def generate_petals():
 
 def generate_file(size, out, color, number, petal_type):
     petals = generate_petals()
+    if not ((number >= 0) and (number <= 12)):
+        raise RuntimeError('Number value is invalid')
+    if not ((petal_type >= 0) and (petal_type <= 6)):
+        raise RuntimeError('Type value is invalid')
     petal = petals[petal_type]
     flower = Flower(size, petal)
     img = flower.generate(color, number)

@@ -1,5 +1,5 @@
 import argparse
-from PIL import Image,ImageEnhance
+from PIL import Image,ImageEnhance,ImageDraw
 import math
 import uuid
 import os
@@ -42,6 +42,17 @@ class Petal:
 
         return petal
 
+class Stamen:
+    def __init__(self, size, color):
+        self.size = size
+        self.color = tuple(color) + (255,)
+
+    def generate(self):
+        stamen = Image.new('RGBA', (self.size,self.size))
+        draw = ImageDraw.Draw(stamen)
+        draw.ellipse((0,0,self.size,self.size), fill=self.color)
+        return stamen
+
 class Flower:
     def __init__(self, size, petal):
         self.petal = petal
@@ -61,6 +72,11 @@ class Flower:
             theta = 360 / number * i
             im = petal_pasted.rotate(theta)
             canvas.paste(im, (0,0), im)
+
+        stamen = Stamen(int(self.width * 0.1), color)
+        stamen_point = int(self.width / 2 - stamen.size / 2)
+        stamen_im = stamen.generate()
+        canvas.paste(stamen_im, (stamen_point, stamen_point), stamen_im)
 
         return canvas
 

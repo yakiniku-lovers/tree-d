@@ -39,9 +39,9 @@ class Petal:
         return petal
 
 class Flower:
-    def __init__(self, petal):
+    def __init__(self, size, petal):
         self.petal = petal
-        self.width = 500
+        self.width = size
         self.size = (self.width, self.width)
 
     def generate(self, color, number):
@@ -73,24 +73,33 @@ def generate_petals():
     ]
     return petals
 
-def generate_file(color, number, petal_type):
+def generate_file(size, out, color, number, petal_type):
     petals = generate_petals()
     petal = petals[petal_type]
-    flower = Flower(petal)
+    flower = Flower(size, petal)
     img = flower.generate(color, number)
     filename = str(uuid.uuid4()) + '.png'
-    img.save(filename)
-    return filename
+    if out[-1] != '/':
+        out += '/'
+    if not os.path.isdir(out):
+        os.makedirs(out)
+    img.save(out + filename)
+    return os.path.abspath(out + filename)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate flower image.')
+    parser.add_argument('-o', '--out',
+                        default=os.path.dirname(os.path.abspath(__file__)) + '/flowers/',
+                        help = 'output directory')
+    parser.add_argument('-s', '--size', type=int, default=500,
+                        help = 'image width and height')
     parser.add_argument('-c', '--color', nargs=3, metavar=('R', 'G', 'B'),
                         default=[128,128,128], type=int, help = 'color of petals')
     parser.add_argument('-n', '--number', default=6, type=int,
                         help='number of petals')
     parser.add_argument('-t', '--type', default=0, type=int,
-                        help='shape type of petal')
+                        help='type of petal')
     args = parser.parse_args()
 
-    print(generate_file(args.color, args.number, args.type))
+    print(generate_file(args.size, args.out, args.color, args.number, args.type))

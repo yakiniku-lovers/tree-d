@@ -1,20 +1,43 @@
-# tree-d
+# tree-d (flower_generator)
 
+画像を生成します。
 
-## 最低要件定義
+## Requirement
+* python3
 
-## 開発環境
-* python3系
+* Pillow
+```console
+yaki@niku $ pip install Pillow
+```
 
-* pillow
+## Usage
+```console
+yaki@niku $ python flower_generater.py -h
+usage: flower_generater.py [-h] [-o OUT] [-s SIZE] [-c R G B] [-n NUMBER]
+                           [-t TYPE]
 
+Generate flower image.
 
-## コマンドライン引数
-`python flower_generater.py --color 126 0 255 --number 6 --type 0`  
-or  
-`python flower_generater.py -c 126 0 255 -n 6 -t 0`
+optional arguments:
+  -h, --help            show this help message and exit
+  -o OUT, --out OUT     output directory
+  -s SIZE, --size SIZE  image width and height
+  -c R G B, --color R G B
+                        color of petals
+  -n NUMBER, --number NUMBER
+                        number of petals
+  -t TYPE, --type TYPE  type of petal
+yaki@niku $ python flower_generater.py -c 200 80 80 -n 8 -t 2
+/home/yaki/src/tree-d/flowers/e57bcb23-56e7-4098-a419-cbdd84991ae5.png
+```
 
-### パラメータ
+画像の生成に成功すると、標準出力にファイルのパスを出力して終了します。
+
+`--out`オプションを指定しないと、`flower_generater.py`のあるディレクトリの`flowers`ディレクトリ下にファイルが保存されます。
+
+`--size`オプションは画像の縦横のピクセル数です。例えば500を指定すると、500x500ピクセルの画像が生成されます。
+
+## パラメータ
 * 花弁の色 (RGBが0~255)
 
 * 花弁の数 (0~12)

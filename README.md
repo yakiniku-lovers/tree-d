@@ -2,7 +2,7 @@
 
 画像を生成します。
 
-## Requirement
+## Requirements
 * python3
 
 * Pillow
@@ -12,8 +12,8 @@ yaki@niku $ pip install Pillow
 
 ## Usage
 ```console
-yaki@niku $ python flower_generater.py -h
-usage: flower_generater.py [-h] [-o OUT] [-s SIZE] [-c R G B] [-n NUMBER]
+yaki@niku $ python flower_generator.py -h
+usage: flower_generator.py [-h] [-o OUT] [-s SIZE] [-c R G B] [-n NUMBER]
                            [-t TYPE]
 
 Generate flower image.
@@ -27,13 +27,13 @@ optional arguments:
   -n NUMBER, --number NUMBER
                         number of petals
   -t TYPE, --type TYPE  type of petal
-yaki@niku $ python flower_generater.py -c 200 80 80 -n 8 -t 2
-/home/yaki/src/tree-d/flowers/e57bcb23-56e7-4098-a419-cbdd84991ae5.png
+yaki@niku $ python flower_generator.py -c 200 80 80 -n 8 -t 2
+flowers/e57bcb23-56e7-4098-a419-cbdd84991ae5.png
 ```
 
-画像の生成に成功すると、標準出力にファイルのパスを出力して終了します。
+画像の生成に成功すると、標準出力にファイルの相対パスを出力して終了します。
 
-`--out`オプションを指定しないと、`flower_generater.py`のあるディレクトリの`flowers`ディレクトリ下にファイルが保存されます。
+`--out`オプションを指定しないと、`flower_generator.py`のあるディレクトリの`flowers`ディレクトリ下にファイルが保存されます。
 
 `--size`オプションは画像の縦横のピクセル数です。例えば500を指定すると、500x500ピクセルの画像が生成されます。
 

@@ -103,18 +103,17 @@ def generate_file(size, out, color, number, petal_type):
     flower = Flower(size, petal)
     img = flower.generate(color, number)
     filename = str(uuid.uuid4()) + '.png'
-    if out[-1] != '/':
-        out += '/'
     if not os.path.isdir(out):
         os.makedirs(out)
-    img.save(out + filename)
-    return os.path.abspath(out + filename)
+    filepath = os.path.normpath(os.path.join(out, filename))
+    img.save(filepath)
+    return filepath
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate flower image.')
     parser.add_argument('-o', '--out',
-                        default=os.path.dirname(os.path.abspath(__file__)) + '/flowers/',
+                        default=os.path.join(os.path.dirname(os.path.relpath(__file__)), 'flowers/'),
                         help = 'output directory')
     parser.add_argument('-s', '--size', type=int, default=500,
                         help = 'image width and height')
